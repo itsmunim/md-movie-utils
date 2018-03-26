@@ -1,4 +1,5 @@
 let axios = require('axios');
+let utils = require('../utils');
 let BaseClient = require('base.client');
 
 class OMDBAPIClient extends BaseClient{
@@ -45,6 +46,14 @@ class OMDBAPIClient extends BaseClient{
 
   getByIMDBId(imdbID) {
     return this.get({imdbID: imdbID, format: 'json', plot: 'short'});
+  }
+
+  _transformResponse(data) {
+    let transformed = {};
+    Object.keys(data).forEach((key) => {
+      transformed[utils.toCamelCase(key)] = data[key];
+    });
+    return transformed;
   }
 }
 

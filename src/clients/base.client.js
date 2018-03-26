@@ -1,5 +1,4 @@
 let axios = require('axios');
-let utils = require('../utils');
 
 class BaseClient {
   constructor(apiKey, baseUrl) {
@@ -35,7 +34,7 @@ class BaseClient {
    *  year: 2004,
    *  plot: 'full|short',
    *  format: 'json|xml',
-   *  type: 'movie|series|episode',
+   *  type: 'movie|series',
    *  imdbID: tt12444
    * }
    */
@@ -93,14 +92,6 @@ class BaseClient {
       }
     });
     return translated;
-  }
-
-  _transformResponse(data) {
-    let transformed = {};
-    Object.keys(data).forEach((key) => {
-      transformed[utils.toCamelCase(key)] = data[key];
-    });
-    return transformed;
   }
 }
 
