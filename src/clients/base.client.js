@@ -75,14 +75,6 @@ class BaseClient {
     throw new Error('Not implemented');
   }
 
-  /**
-   * Makes a GET HTTP call
-   * @param url
-   * @param params
-   * @param headers
-   * @param responseTransformer A function of format `function (data) { //transform the data and return }`
-   * @returns A wrapped request promise
-   */
   _makeHTTPGET(url, params, headers, responseTransformer) {
     return this.httpManager({
       method: 'get',
