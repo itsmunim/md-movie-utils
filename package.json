@@ -1,0 +1,10 @@
+{
+  "name": "md-movie-utils",
+  "version": "0.0.1",
+  "description": "The ultimate utility to get any information about a movie",
+  "main": "index.js",
+  "repository": "https://github.com/dibosh/md-movie-utils",
+  "author": "Munim Dibosh",
+  "license": "MIT",
+  "private": false
+}
