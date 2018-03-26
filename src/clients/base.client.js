@@ -10,7 +10,7 @@ class BaseClient {
     this._apiKey = apiKey;
 
     this._httpManager = axios.create({
-      baseURL: baseUrl + this.authParam,
+      baseURL: baseUrl,
       timeout: 5000
     });
   }

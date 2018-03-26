@@ -25,7 +25,7 @@ class OMDBAPIClient extends BaseClient{
 
   get(options) {
     let reqOptions = this._translateIncomingRequestOptions(options);
-    return this._makeHTTPGET(null, reqOptions, null, this._transformResponse)
+    return this._makeHTTPGET(this.authParam, reqOptions, null, this._transformResponse)
       .then((resp) => {
         return resp.data;
       });
@@ -33,7 +33,7 @@ class OMDBAPIClient extends BaseClient{
 
   search(options) {
     let reqOptions = this._translateIncomingRequestOptions(options);
-    return this._makeHTTPGET(null, reqOptions, null, this._transformResponse)
+    return this._makeHTTPGET(this.authParam, reqOptions, null, this._transformResponse)
       .then((resp) => {
         return resp.data;
       });
