@@ -1,5 +1,5 @@
 let axios = require('axios');
-let BaseClient = require('base.client');
+let BaseClient = require('./base.client');
 
 class MovieDBClient extends BaseClient{
   static getInstance(apiKey) {

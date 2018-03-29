@@ -1,6 +1,6 @@
 let axios = require('axios');
 let utils = require('../utils');
-let BaseClient = require('base.client');
+let BaseClient = require('./base.client');
 
 class OMDBAPIClient extends BaseClient{
   static getInstance(apiKey) {
