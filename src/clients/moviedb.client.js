@@ -58,9 +58,9 @@ class MovieDBClient extends BaseClient{
       null,
       this._flattenResponse(mediaType, options.title, options.year, true)
     ).then((resp) => {
-      if (resp.length) {
+      if (resp.data.length) {
         // fetch the details
-        return this.getDetails(resp[0].id, options.type);
+        return this.getDetails(resp.data[0].id, options.type);
       } else {
         return {};
       }
@@ -81,7 +81,7 @@ class MovieDBClient extends BaseClient{
     let reqOptions = this._translateIncomingRequestOptions(options);
     reqOptions['include_adult'] = false;
     let url = this._getURL('search') + this.authParam;
-    let mediaType = options.type === 'series' ? 'tv' : 'movie';
+    let mediaTypeMatcher = options.type === 'series' ? 'name' : 'title';
 
     return this._makeHTTPGET(
       url,
@@ -89,8 +89,8 @@ class MovieDBClient extends BaseClient{
       null,
       this._flattenResponse(mediaType, options.query, null)
     ).then((resp) => {
-      return resp.data.results.filter((result) => {
-        return result.mediaType === mediaType;
+      return resp.data.filter((result) => {
+        return !result[mediaTypeMatcher];
       });
     });
   }
@@ -126,8 +126,8 @@ class MovieDBClient extends BaseClient{
     let detailsUrl = this._getURL(type + 'Details') + '/' + tmdbID;
     detailsUrl = detailsUrl + this.authParam;
     return this._makeHTTPGET(detailsUrl, null, null, null)
-      .then((detailsResp) => {
-        return this._translateResponseObject(detailsResp, mediaType);
+      .then((resp) => {
+        return this._translateResponseObject(resp.data, mediaType);
       });
   }
 
