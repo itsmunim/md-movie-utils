@@ -93,4 +93,4 @@ class OMDBAPIClient extends BaseClient{
   }
 }
 
-module.exports = {getClient: OMDBAPIClient.getInstance};
+module.exports = OMDBAPIClient;
