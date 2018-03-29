@@ -1,4 +1,4 @@
-let getOMDBClient = require('omdb.client.js');
-let getTMDBClient = require('moviedb.client.js');
+let OMDBClient = require('omdb.client');
+let MovieDBClient = require('moviedb.client');
 
-module.exports = {getOMDBClient, getTMDBClient};
+module.exports = {OMDBClient, MovieDBClient};

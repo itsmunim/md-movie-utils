@@ -180,4 +180,4 @@ class MovieDBClient extends BaseClient{
   }
 }
 
-module.exports = {getClient: MovieDBClient.getInstance};
+module.exports = MovieDBClient;
