@@ -9,8 +9,7 @@ class BaseClient {
     this._apiKey = apiKey;
 
     this._httpManager = axios.create({
-      baseURL: baseUrl,
-      timeout: 5000
+      baseURL: baseUrl
     });
   }
 
@@ -43,19 +42,22 @@ class BaseClient {
   }
 
   _makeHTTPGET(url, params, headers, responseTransformer) {
+    let paramsWithAuth = Object.assign({}, params);
+    paramsWithAuth[this.authParam] = this._apiKey;
+
     return this.httpManager({
       method: 'get',
       url: url,
-      params: params,
+      params: paramsWithAuth,
       headers: headers,
-      transformResponse: [responseTransformer]
+      transformResponse: [JSON.parse, responseTransformer]
     });
   }
 
   _translateIncomingRequestOptions(options) {
     let translated = {};
     Object.keys(options).forEach((key) => {
-      if (options[key]) {
+      if (options[key] && this.requestKeyMap[key]) {
         translated[this.requestKeyMap[key]] = options[key];
       }
     });
