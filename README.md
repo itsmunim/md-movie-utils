@@ -15,6 +15,7 @@ easy to use OMDB and TMDB clients and more.
     ```
     let movieDBClients = require('md-movie-utils').clients;
     let omdbClient = movieDBClients.OMDBClient.getInstance(<YOUR_API_KEY>);
+    let tmdbClient = movieDBClients.MovieDBClient.getInstance(<YOUR_API_KEY>);
     ```
  
 - Get info on any movie using the simple get methods-
@@ -27,7 +28,7 @@ easy to use OMDB and TMDB clients and more.
         plot: 'full',
         type: 'movie'
     };
-    omdbClient.get(movieRequest)
+    omdbClient/* Or tmdbClient */.get(movieRequest)
         .then((data) => {
             console.log(data); // Thor Ragnarok movie info is here!
         });
@@ -41,7 +42,7 @@ easy to use OMDB and TMDB clients and more.
         plot: 'full',
         type: 'movie'
     };
-    omdbClient.get(movieRequest)
+    omdbClient/* Or tmdbClient */.get(movieRequest)
         .then((data) => {
             console.log(data); // Movie info is here!
         });
@@ -49,14 +50,14 @@ easy to use OMDB and TMDB clients and more.
     
 - Or even simply using the helper methods-
     ```
-    omdbClient.getByTitleAndYear(title, year)
+    omdbClient/* Or tmdbClient */.getByTitleAndYear(title, year)
         .then((data) => {
             console.log(data); // Movie info is here!
         });
         
         
     // or using the IMDB ID
-    omdbClient.getByIMDBId(imdbID)
+    omdbClient/* Or tmdbClient */.getByIMDBId(imdbID)
         .then((data) => {
             console.log(data); // Movie info is here!
         });
@@ -68,7 +69,7 @@ easy to use OMDB and TMDB clients and more.
     let searchRequest = {
         query: 'Saw'
     };
-    omdbClient.search(searchRequest)
+    omdbClient/* Or tmdbClient */.search(searchRequest)
         .then((data) => {
             console.log(data); // Movie info(s) is here!
         });
