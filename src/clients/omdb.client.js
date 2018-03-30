@@ -46,7 +46,7 @@ class OMDBAPIClient extends BaseClient {
     reqOptions.plot = reqOptions.plot || 'full';
     reqOptions.format = reqOptions.format || 'json';
 
-    return this._makeHTTPGET('', reqOptions, null, this._transformResponse)
+    return this._makeHTTPGET('', reqOptions, null, this._transformResponse.bind(this))
       .then((resp) => {
         return resp.data;
       });
@@ -69,7 +69,7 @@ class OMDBAPIClient extends BaseClient {
     let reqOptions = this._translateIncomingRequestOptions(options);
     reqOptions.plot = reqOptions.plot || 'full';
     reqOptions.format = reqOptions.format || 'json';
-    return this._makeHTTPGET('', reqOptions, null, this._transformResponse)
+    return this._makeHTTPGET('', reqOptions, null, this._transformResponse.bind(this))
       .then((resp) => {
         return resp.data;
       });
@@ -100,11 +100,21 @@ class OMDBAPIClient extends BaseClient {
   }
 
   _transformResponse(data) {
-    let transformed = {};
-    Object.keys(data).forEach((key) => {
-      transformed[utils.toCamelCase(key)] = data[key];
+    if (data['Search']) {
+      return data['Search'].map((result) => {
+        return this._translateResponseObject(result);
+      });
+    } else {
+      return this._translateResponseObject(data);
+    }
+  }
+
+  _translateResponseObject(responseObj) {
+    let translated = {};
+    Object.keys(responseObj).forEach((key) => {
+      translated[utils.toCamelCase(key)] = responseObj[key];
     });
-    return transformed;
+    return translated;
   }
 }
 
