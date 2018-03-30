@@ -8,7 +8,7 @@ class OMDBAPIClient extends BaseClient{
   }
 
   get authParam() {
-    return '?apikey=' + this._apiKey;
+    return 'apikey';
   }
 
   get requestKeyMap() {
@@ -38,8 +38,17 @@ class OMDBAPIClient extends BaseClient{
    * @returns {*|Promise.<TResult>}
    */
   get(options) {
+    if (!options.imdbID) {
+      if (!options.title || !options.year || !options.type) {
+        throw new Error('Either one of the format of data must be provided: imdbID | (title, year, type)');
+      }
+    }
+
     let reqOptions = this._translateIncomingRequestOptions(options);
-    return this._makeHTTPGET(this.authParam, reqOptions, null, this._transformResponse)
+    reqOptions.plot = reqOptions.plot || 'full';
+    reqOptions.format = reqOptions.format || 'json';
+
+    return this._makeHTTPGET('', reqOptions, null, this._transformResponse)
       .then((resp) => {
         return resp.data;
       });
@@ -58,7 +67,7 @@ class OMDBAPIClient extends BaseClient{
    */
   search(options) {
     let reqOptions = this._translateIncomingRequestOptions(options);
-    return this._makeHTTPGET(this.authParam, reqOptions, null, this._transformResponse)
+    return this._makeHTTPGET('', reqOptions, null, this._transformResponse)
       .then((resp) => {
         return resp.data;
       });
