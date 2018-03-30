@@ -8,7 +8,32 @@ easy to use OMDB and TMDB clients and more.
 `npm install md-movie-utils --save`
 
 #### How to use
-
+##### Parsing movie name, year etc. basic info from torrent/plain file names
+    ```
+    let parser = require('md-movie-utils').parser;
+    
+    // parse Murder on the Orient Express (2017) [BluRay] [1080p].mp4
+    parser.parseFromTorrentFileName('Murder on the Orient Express (2017) [BluRay] [1080p].mp4')
+    // returns
+    {
+      "year": 2017,
+      "resolution": "1080p",
+      "quality": "BluRay",
+      "title": "Murder on the Orient Express",
+      "excess": [
+        "[]",
+        "[]"
+      ]
+    }
+    
+    // parse Batman Begins (2005)
+    parser.parseMovieNameAndYear('Batman Begins (2005', parser.formats.BRACES_FORMAT);
+    // returns
+    {
+      "movieName": "Batman Begins",
+      "year": 2005
+    }
+    ```
 ##### Using Open Movie Database/The Movie Database clients
 - Initialize the client using your API key-
     
@@ -95,6 +120,8 @@ Example API-
 - `/tmdb/series/getByTitleAndYear?title=Saw&year=2004`
 - `/tmdb/get/:imdbID`
 - `/tmdb/search?q=The Dark Knight`
+- `/extract/fromTorrent?fileName=Murder on the Orient Express (2017) [BluRay] [1080p].mp4`
+- `/extract/plain?fileName=Murder on the Orient Express (2017) [BluRay] [1080p].mp4&format=DOT_FORMAT`
       
       
 #### The MIT License
