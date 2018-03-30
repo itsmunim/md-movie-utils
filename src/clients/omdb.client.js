@@ -62,7 +62,13 @@ class OMDBAPIClient extends BaseClient {
    * @reject {Error} - The error with an appropriate `message`.
    */
   search(options) {
+    if (!options.query) {
+      throw new Error('Query must be given');
+    }
+
     let reqOptions = this._translateIncomingRequestOptions(options);
+    reqOptions.plot = reqOptions.plot || 'full';
+    reqOptions.format = reqOptions.format || 'json';
     return this._makeHTTPGET('', reqOptions, null, this._transformResponse)
       .then((resp) => {
         return resp.data;
