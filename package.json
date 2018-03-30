@@ -17,6 +17,18 @@
     "body-parser": "^1.18.2",
     "express": "^4.16.3"
   },
+  "keywords": [
+    "omdb",
+    "imdb",
+    "api",
+    "api client",
+    "tmdb",
+    "movie info",
+    "extraction",
+    "movie",
+    "movie name",
+    "torrent"
+  ],
   "dependencies": {
     "axios": "^0.18.0",
     "parse-torrent-name": "^0.5.4"
