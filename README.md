@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/dibosh/md-movie-utils.svg?branch=master)](https://travis-ci.org/dibosh/md-movie-utils)
+
 ### md-movie-utils
 
 All the movie info extraction utilities in one place. Has built-in,
