@@ -1,6 +1,8 @@
 var express = require("express");
 var bodyParser = require("body-parser");
-var movieDBClients = require('../dist').clients;
+var mdMovieUtils = require('../dist');
+var movieDBClients = mdMovieUtils.clients;
+var movieInfoParser = mdMovieUtils.parser;
 var app = express();
 
 var omdbClient = movieDBClients.OMDBClient.getInstance('omdb_api_key');
@@ -82,6 +84,17 @@ app.get("/tmdb/get/:imdbID", function (req, res) {
 app.get("/tmdb/search", function (req, res) {
   tmdbClient.search({query: req.query.q, year: req.query.year, type: req.query.type})
     .then(response.success(res), response.failure(res));
+});
+
+// parsing example
+app.get("/extract/fromTorrent", function (req, res) {
+  let info = movieInfoParser.parseFromTorrentFileName(req.query.fileName);
+  return res.status(200).json(info);
+});
+
+app.get("/extract/plain", function (req, res) {
+  let info = movieInfoParser.parseMovieNameAndYear(req.query.fileName, movieInfoParser.formats[req.query.format]);
+  return res.status(200).json(info);
 });
 
 
