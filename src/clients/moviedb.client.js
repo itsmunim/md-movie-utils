@@ -20,15 +20,15 @@ class MovieDBClient extends BaseClient{
   }
 
   /**
-   * Get a movie by looking up using different params (e.g. title, imdb id, year etc.)
-   * @param options
-   * Example- {
-   *  title: 'Saw',
-   *  year: 2004,
-   *  type: 'movie|series',
-   *  imdbID: tt12444
-   * }
-   * @returns {*|Promise.<TResult>}
+   * Get a media(movie/series) by looking up using different params (e.g. title, imdb id, year etc.)
+   * @param {object} options The options based on which the movie will be fetched.
+   * @example
+   * get({title: 'Saw', year: 2004, type: 'movie'})
+   * @example
+   * get({imdbID: 'tt12444'})
+   * @returns {Promise}
+   * @fulfil {object} - The movie/series object.
+   * @reject {Error} - The error with an appropriate `message`.
    */
   get(options) {
     if (!options.imdbID) {
@@ -93,13 +93,13 @@ class MovieDBClient extends BaseClient{
   }
 
   /**
-   * Search.
-   * @param options
-   * Example- {
-   *  query: 'Saw',
-   *  page: 1,
-   *  type: 'movie|series'
-   * }
+   * Search for a movie/series.
+   * @param {object} options The options based on which the search will be conducted.
+   * @example
+   * search({query: 'Saw', year: 2004, type: 'movie'})
+   * @returns {Promise}
+   * @fulfil {object} - The movie/series object.
+   * @reject {Error} - The error with an appropriate `message`.
    */
   search(options) {
     if (!options.query) {
@@ -132,31 +132,37 @@ class MovieDBClient extends BaseClient{
   }
 
   /**
-   * Get a media that match exact title & given year
-   * @param title
-   * @param year
-   * @param type 'movie|series'
-   * @returns {*|Promise.<TResult>}
-     */
+   * Get a media(movie/series) by title and year
+   * @param {string} title Title of the media (movie/series)
+   * @param {number} year The year media type(movie/series) was released (Optional).
+   * @param {string} [type='movie'] Type of the media; movie/series (Optional).
+   * @returns {Promise}
+   * @fulfil {object} - The movie/series object.
+   * @reject {Error} - The error with an appropriate `message`.
+   */
   getByTitleAndYear(title, year, type = 'movie') {
     return this.get({title: title, year: year, type: type});
   }
 
   /**
-   * Get a media matched by the given imdb id
-   * @param imdbID
-   * @returns {*|Promise.<TResult>}
-     */
+   * Get a media(movie/series) by IMDB ID
+   * @param {string} imdbID IMDB ID of the media
+   * @returns {Promise}
+   * @fulfil {object} - The movie/series object.
+   * @reject {Error} - The error with an appropriate `message`.
+   */
   getByIMDBId(imdbID) {
     return this.get({imdbID: imdbID});
   }
 
   /**
    * Get details of a movie or series with given tmdb id
-   * @param tmdbID The Movie DB ID of the media
-   * @param type 'movie|series'
-   * @returns {*|Promise.<TResult>}
-     */
+   * @param {string} tmdbID The Movie DB ID of the media
+   * @param {string} type The media type; movie/series
+   * @returns {Promise}
+   * @fulfil {object} - The movie/series object.
+   * @reject {Error} - The error with an appropriate `message`.
+   */
   getDetails(tmdbID, type) {
     let mediaType = type === 'series' ? 'tv' : 'movie';
     let detailsUrl = this._getURL(type + 'Details') + '/' + tmdbID;

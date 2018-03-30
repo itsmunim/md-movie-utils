@@ -76,7 +76,7 @@ class OMDBAPIClient extends BaseClient {
   }
 
   /**
-   * Get a media(movie/series) by title and/or year
+   * Get a media(movie/series) by title and year
    * @param {string} title Title of the media (movie/series)
    * @param {number} year The year media type(movie/series) was released (Optional).
    * @param {string} [type='movie'] Type of the media; movie/series (Optional).
