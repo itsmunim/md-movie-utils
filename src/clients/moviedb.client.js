@@ -7,7 +7,7 @@ class MovieDBClient extends BaseClient{
   }
 
   get authParam() {
-    return '?api_key=' + this._apiKey;
+    return 'api_key';
   }
 
   get requestKeyMap() {
@@ -31,13 +31,30 @@ class MovieDBClient extends BaseClient{
    * @returns {*|Promise.<TResult>}
    */
   get(options) {
-    let url, reqOptions = {};
+    if (!options.imdbID) {
+      if (!options.title || !options.year || !options.type) {
+        throw new Error('Either one of the format of data must be provided: imdbID | (title, year, type)');
+      }
+    }
 
-    options.type = options.type || 'movie';
+    let url, responseTransformer, reqOptions = {};
+
     if (options.imdbID) {
       url = this._getURL('imdbID') + '/' + options.imdbID;
       reqOptions['external_source'] = 'imdb_id';
+      responseTransformer = (data) => {
+        let nonEmptyResultsKey = Object.keys(data).filter((k) => {
+          return data[k].length > 0;
+        });
+
+        if (nonEmptyResultsKey.length > 0) {
+          return data[nonEmptyResultsKey[0]];
+        } else {
+          return [];
+        }
+      };
     } else {
+      options.type = options.type || 'movie';
       reqOptions = this._translateIncomingRequestOptions(options);
       reqOptions['include_adult'] = false;
       reqOptions['page'] = 1;
@@ -47,20 +64,28 @@ class MovieDBClient extends BaseClient{
         reqOptions['first_air_date_year'] = options.year;
         delete reqOptions['primary_release_year'];
       }
-    }
+      let mediaType = options.type === 'series' ? 'tv' : 'movie';
 
-    url = url + this.authParam;
-    let mediaType = options.type === 'series' ? 'tv' : 'movie';
+      responseTransformer = (data) => {
+        return this._findMatchByTitleAndYear(
+          data.results,
+          options.title,
+          options.year,
+          mediaType,
+          true
+        );
+      };
+    }
 
     return this._makeHTTPGET(
       url,
       reqOptions,
       null,
-      this._flattenResponse(mediaType, options.title, options.year, true)
+      responseTransformer
     ).then((resp) => {
       if (resp.data.length) {
         // fetch the details
-        return this.getDetails(resp.data[0].id, options.type);
+        return this.getDetails(resp.data[0].id, this._guessMediaType(resp.data[0]));
       } else {
         return {};
       }
@@ -77,21 +102,32 @@ class MovieDBClient extends BaseClient{
    * }
    */
   search(options) {
+    if (!options.query) {
+      throw new Error('Query must be given');
+    }
     options.type = options.type || 'movie';
     let reqOptions = this._translateIncomingRequestOptions(options);
     reqOptions['include_adult'] = false;
-    let url = this._getURL('search') + this.authParam;
-    let mediaTypeMatcher = options.type === 'series' ? 'name' : 'title';
+    let url = this._getURL('search');
+
+    let responseTransformer = (data) => {
+      return {
+        currentPage: options.page,
+        totalPages: data['total_pages'],
+        numFound: data['total_results'],
+        results: data.results.map((result) => {
+          return this._translateResponseObject(result, result['media_type'])
+        })
+      };
+    };
 
     return this._makeHTTPGET(
       url,
       reqOptions,
       null,
-      this._flattenResponse(mediaType, options.query, null)
+      responseTransformer
     ).then((resp) => {
-      return resp.data.filter((result) => {
-        return !result[mediaTypeMatcher];
-      });
+      return resp.data;
     });
   }
 
@@ -124,7 +160,6 @@ class MovieDBClient extends BaseClient{
   getDetails(tmdbID, type) {
     let mediaType = type === 'series' ? 'tv' : 'movie';
     let detailsUrl = this._getURL(type + 'Details') + '/' + tmdbID;
-    detailsUrl = detailsUrl + this.authParam;
     return this._makeHTTPGET(detailsUrl, null, null, null)
       .then((resp) => {
         return this._translateResponseObject(resp.data, mediaType);
@@ -143,25 +178,21 @@ class MovieDBClient extends BaseClient{
     }[identifier];
   }
 
-  _flattenResponse(mediaType, queryTitle, queryYear, checkForExactMatch=false) {
-    return (data) => {
-      let idBasedResults = data[mediaType + '_results'];
-      return idBasedResults ||
-              this._findMatchByTitleAndYear(data.results, queryTitle, queryYear, mediaType, checkForExactMatch);
-    }
-  }
-
   _findMatchByTitleAndYear(movieResults, qTitle, qYear, mediaType, exact=false) {
     return movieResults.filter((movieResult) => {
       let titleKey = mediaType === 'tv' ? 'name' : 'title';
       let dateKey = mediaType === 'tv' ? 'first_air_date' : 'release_date';
       let title = movieResult[titleKey];
       let year = movieResult[dateKey].match(/(\d{4})-\d{2}-\d{2}/)[1];
-      let normalizedTitle = title.toLowerCase();
+      let normalizedTitle = title.toLowerCase().replace(/_|-|\.|:/, ' ');
       let normalizedQueryTitle = qTitle.toLowerCase();
       return exact ? (normalizedQueryTitle === normalizedTitle && year === qYear)
         : (normalizedTitle.includes(normalizedQueryTitle) || (qYear && year == qYear));
     });
+  }
+
+  _guessMediaType(response) {
+    return response.name ? 'series' : (response.title ? 'movie' : '');
   }
 
   _translateResponseObject(responseObj, mediaType) {
@@ -170,11 +201,12 @@ class MovieDBClient extends BaseClient{
     let dateKey = mediaType === 'tv' ? 'first_air_date' : 'release_date';
 
     response['id'] = responseObj['id'];
+    response['imdbID'] = responseObj['imdb_id'];
     response['title'] = responseObj[titleKey];
     response['year'] = responseObj[dateKey].match(/(\d{4})-\d{2}-\d{2}/)[1];
     response['summary'] = responseObj['overview'];
     response['poster'] = 'http://image.tmdb.org/t/p/original' + responseObj['poster_path'];
-    response['genres'] = responseObj['genres'];
+    response['genres'] = responseObj['genres'] || responseObj['genre_ids'];
     response['rating'] = responseObj['vote_average'];
     return response;
   }
