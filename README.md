@@ -88,7 +88,12 @@ Example API-
 - `/omdb/get?title=Saw&year=2004&type=movie`
 - `/omdb/movie/getByTitleAndYear?title=Saw&year=2004`
 - `/omdb/series/getByTitleAndYear?title=Saw&year=2004`
-- `/omdb/get/:imdbID`
+- `/omdb/search?q=Batman`
+- `/tmdb/get?title=Saw&year=2004&type=movie`
+- `/tmdb/movie/getByTitleAndYear?title=Saw&year=2004`
+- `/tmdb/series/getByTitleAndYear?title=Saw&year=2004`
+- `/tmdb/get/:imdbID`
+- `/tmdb/search?q=The Dark Knight`
       
       
 #### The MIT License
