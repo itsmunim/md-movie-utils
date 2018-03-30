@@ -1,6 +1,6 @@
 var express = require("express");
 var bodyParser = require("body-parser");
-var movieDBClients = require('../src').clients;
+var movieDBClients = require('../dist').clients;
 var app = express();
 
 var omdbClient = movieDBClients.OMDBClient.getInstance('omdb_api_key');

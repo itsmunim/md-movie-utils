@@ -6,7 +6,7 @@
     "examples": "node example/server.js",
     "build": "babel src/ --out-dir dist/ --copy-files"
   },
-  "main": "index.js",
+  "main": "dist/index.js",
   "repository": "https://github.com/dibosh/md-movie-utils",
   "author": "Munim Dibosh",
   "license": "MIT",
