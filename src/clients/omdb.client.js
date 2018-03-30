@@ -2,7 +2,7 @@ let axios = require('axios');
 let utils = require('../utils');
 let BaseClient = require('./base.client');
 
-class OMDBAPIClient extends BaseClient{
+class OMDBAPIClient extends BaseClient {
   static getInstance(apiKey) {
     return new OMDBAPIClient(apiKey, 'http://www.omdbapi.com/');
   }
@@ -25,16 +25,12 @@ class OMDBAPIClient extends BaseClient{
   }
 
   /**
-   * Get a movie by looking up using different params (e.g. title, imdb id, year etc.)
-   * @param options
-   * Example- {
-   *  title: 'Saw',
-   *  year: 2004,
-   *  plot: 'full|short',
-   *  format: 'json|xml',
-   *  type: 'movie|series',
-   *  imdbID: tt12444
-   * }
+   * Get a media(movie/series) by looking up using different params (e.g. title, imdb id, year etc.)
+   * @param {object} options The options based on which the movie will be fetched.
+   * @example
+   * get({title: 'Saw', year: 2004, plot: 'short', format: 'xml', type: 'movie'})
+   * @example
+   * get({imdbID: 'tt12444'})
    * @returns {*|Promise.<TResult>}
    */
   get(options) {
@@ -55,14 +51,10 @@ class OMDBAPIClient extends BaseClient{
   }
 
   /**
-   * Search for a movie.
-   * @param options
-   * Example- {
-   *  query: 'Saw',
-   *  year: 2004,
-   *  format: 'json|xml',
-   *  type: 'movie|series|episode'
-   * }
+   * Search for a movie/series.
+   * @param {object} options The options based on which the search will be conducted.
+   * @example
+   * search({query: 'Saw', year: 2004, format: 'xml', type: 'movie'})
    * @returns {*|Promise.<TResult>}
    */
   search(options) {
@@ -74,10 +66,10 @@ class OMDBAPIClient extends BaseClient{
   }
 
   /**
-   * Get a movie by title and/or year
-   * @param title Title of the movie
-   * @param year Optional
-   * @param type Optional. Default- movie
+   * Get a media(movie/series) by title and/or year
+   * @param {string} title Title of the media (movie/series)
+   * @param {number} year The year media type(movie/series) was released (Optional).
+   * @param {string} [type='movie'] Type of the media; movie/series (Optional).
    * @returns {*|Promise.<TResult>}
    */
   getByTitleAndYear(title, year, type = 'movie') {
@@ -85,8 +77,8 @@ class OMDBAPIClient extends BaseClient{
   }
 
   /**
-   * Get a movie by IMDB ID
-   * @param imdbID
+   * Get a media(movie/series) by IMDB ID
+   * @param {string} imdbID IMDB ID of the media
    * @returns {*|Promise.<TResult>}
    */
   getByIMDBId(imdbID) {

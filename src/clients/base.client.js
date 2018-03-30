@@ -1,6 +1,11 @@
 let axios = require('axios');
 
 class BaseClient {
+  /**
+   * Initialize a specific client.
+   * @param {string} apiKey client specific api key
+   * @param {string} baseUrl client specific base url
+     */
   constructor(apiKey, baseUrl) {
     if (!apiKey) {
       throw new Error('API Key not provided.');
@@ -21,13 +26,13 @@ class BaseClient {
     return this._httpManager;
   }
 
-  get requestKeyMap () {
+  get requestKeyMap() {
     throw new Error('Not implemented');
   }
 
   /**
    * Get a movie by looking up using different params (e.g. title, imdb id, year etc.)
-   * @param options
+   * @param {object} options
    */
   get(options) {
     throw new Error('Not implemented');
@@ -35,7 +40,7 @@ class BaseClient {
 
   /**
    * Search for a movie.
-   * @param options
+   * @param {object} options
    */
   search(options) {
     throw new Error('Not implemented');
