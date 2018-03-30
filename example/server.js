@@ -3,7 +3,7 @@ var bodyParser = require("body-parser");
 var movieDBClients = require('../src').clients;
 var app = express();
 
-var omdbClient = movieDBClients.OMDBClient.getInstance('8695ae83');
+var omdbClient = movieDBClients.OMDBClient.getInstance('your_api_key');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
