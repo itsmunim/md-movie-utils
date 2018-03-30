@@ -31,7 +31,9 @@ class OMDBAPIClient extends BaseClient {
    * get({title: 'Saw', year: 2004, plot: 'short', format: 'xml', type: 'movie'})
    * @example
    * get({imdbID: 'tt12444'})
-   * @returns {*|Promise.<TResult>}
+   * @returns {Promise}
+   * @fulfil {object} - The movie/series object.
+   * @reject {Error} - The error with an appropriate `message`.
    */
   get(options) {
     if (!options.imdbID) {
@@ -55,7 +57,9 @@ class OMDBAPIClient extends BaseClient {
    * @param {object} options The options based on which the search will be conducted.
    * @example
    * search({query: 'Saw', year: 2004, format: 'xml', type: 'movie'})
-   * @returns {*|Promise.<TResult>}
+   * @returns {Promise}
+   * @fulfil {object} - The movie/series object.
+   * @reject {Error} - The error with an appropriate `message`.
    */
   search(options) {
     let reqOptions = this._translateIncomingRequestOptions(options);
@@ -70,7 +74,9 @@ class OMDBAPIClient extends BaseClient {
    * @param {string} title Title of the media (movie/series)
    * @param {number} year The year media type(movie/series) was released (Optional).
    * @param {string} [type='movie'] Type of the media; movie/series (Optional).
-   * @returns {*|Promise.<TResult>}
+   * @returns {Promise}
+   * @fulfil {object} - The movie/series object.
+   * @reject {Error} - The error with an appropriate `message`.
    */
   getByTitleAndYear(title, year, type = 'movie') {
     return this.get({title: title, year: year, format: 'json', plot: 'short', type: type});
@@ -79,7 +85,9 @@ class OMDBAPIClient extends BaseClient {
   /**
    * Get a media(movie/series) by IMDB ID
    * @param {string} imdbID IMDB ID of the media
-   * @returns {*|Promise.<TResult>}
+   * @returns {Promise}
+   * @fulfil {object} - The movie/series object.
+   * @reject {Error} - The error with an appropriate `message`.
    */
   getByIMDBId(imdbID) {
     return this.get({imdbID: imdbID, format: 'json', plot: 'short'});
