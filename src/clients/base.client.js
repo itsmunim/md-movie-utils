@@ -50,12 +50,17 @@ class BaseClient {
     let paramsWithAuth = Object.assign({}, params);
     paramsWithAuth[this.authParam] = this._apiKey;
 
+    let responseTransformers = [JSON.parse];
+    if (responseTransformer) {
+      responseTransformers.push(responseTransformer);
+    }
+
     return this.httpManager({
       method: 'get',
       url: url,
       params: paramsWithAuth,
       headers: headers,
-      transformResponse: [JSON.parse, responseTransformer]
+      transformResponse: responseTransformers
     });
   }
 
