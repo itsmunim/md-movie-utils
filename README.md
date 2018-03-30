@@ -9,7 +9,7 @@ easy to use OMDB and TMDB clients and more.
 
 #### How to use
 ##### Parsing movie name, year etc. basic info from torrent/plain file names
-    ```
+    
     let parser = require('md-movie-utils').parser;
     
     // parse Murder on the Orient Express (2017) [BluRay] [1080p].mp4
@@ -27,13 +27,13 @@ easy to use OMDB and TMDB clients and more.
     }
     
     // parse Batman Begins (2005)
-    parser.parseMovieNameAndYear('Batman Begins (2005', parser.formats.BRACES_FORMAT);
+    parser.parseMovieNameAndYear('Batman Begins (2005)', parser.formats.BRACES_FORMAT);
     // returns
     {
       "movieName": "Batman Begins",
       "year": 2005
     }
-    ```
+    
 ##### Using Open Movie Database/The Movie Database clients
 - Initialize the client using your API key-
     
