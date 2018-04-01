@@ -1,3 +1,5 @@
+![mdMovieUtils Logo](https://raw.githubusercontent.com/dibosh/md-movie-utils/master/md-movie-utils-icon.png)
+
 [![Build Status](https://travis-ci.org/dibosh/md-movie-utils.svg?branch=master)](https://travis-ci.org/dibosh/md-movie-utils)
 [![all downloads](https://img.shields.io/npm/dt/md-movie-utils.svg)]()
 
