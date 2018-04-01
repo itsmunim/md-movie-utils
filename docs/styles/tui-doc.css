@@ -483,3 +483,13 @@ span.arrow {
     font-size: 8pt;
     padding-right: 5px;
 }
+
+p.badges {
+    display: flex;
+    align-items: center;
+    padding: 0;
+}
+
+p.badges > * {
+    margin-right: 10px;
+}
