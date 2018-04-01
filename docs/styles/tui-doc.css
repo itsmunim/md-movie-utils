@@ -280,6 +280,7 @@ footer {
     background-color: #00beaa;
     color: #ebf8ff;
     text-align: center;
+    display: none;
 }
 
 /* README*/
