@@ -8,8 +8,8 @@ ul, ol, li {list-style:none; padding-left:0; margin-left:0;}
 .lnb {
     width: 290px;
     position: absolute;
-    bottom: 30px;
     top: 0;
+    bottom: 0;
     overflow: auto;
     left: 0;
     background-color: #161b1d;
@@ -128,7 +128,6 @@ ul, ol, li {list-style:none; padding-left:0; margin-left:0;}
     bottom: 0;
     position: absolute;
     overflow: auto;
-    margin-bottom: 35px;
 }
 .main article ol,
 .main article ul {
