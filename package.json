@@ -4,7 +4,8 @@
   "description": "The ultimate utility to get any information about a movie",
   "scripts": {
     "examples": "node example/server.js",
-    "build": "babel src/ --out-dir dist/ --copy-files"
+    "build": "babel src/ --out-dir dist/ --copy-files",
+    "jsdoc": "rm -rf docs/ && jsdoc src example -r -c jsdoc.json README.md -d docs"
   },
   "main": "dist/index.js",
   "repository": "https://github.com/dibosh/md-movie-utils",
@@ -15,7 +16,9 @@
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "body-parser": "^1.18.2",
-    "express": "^4.16.3"
+    "express": "^4.16.3",
+    "jsdoc": "^3.5.5",
+    "tui-jsdoc-template": "^1.2.2"
   },
   "keywords": [
     "omdb",

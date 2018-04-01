@@ -1,6 +1,8 @@
 [![Build Status](https://travis-ci.org/dibosh/md-movie-utils.svg?branch=master)](https://travis-ci.org/dibosh/md-movie-utils)
+[![all downloads](https://img.shields.io/npm/dt/md-movie-utils.svg)]()
 
-### md-movie-utils
+
+### [md-movie-utils](https://dibosh.github.io/md-movie-utils)
 
 All the movie info extraction utilities in one place. Has built-in,
 easy to use OMDB and TMDB clients and more.
@@ -9,9 +11,11 @@ easy to use OMDB and TMDB clients and more.
 
 `npm install md-movie-utils --save`
 
-#### How to use
-##### Parsing movie name, year etc. basic info from torrent/plain file names
+#### Usage
+
+- ##### Parsing movie name, year etc. basic info from torrent/plain file names
     
+    ```
     let parser = require('md-movie-utils').parser;
     
     // parse Murder on the Orient Express (2017) [BluRay] [1080p].mp4
@@ -35,82 +39,87 @@ easy to use OMDB and TMDB clients and more.
       "movieName": "Batman Begins",
       "year": 2005
     }
-    
-##### Using Open Movie Database/The Movie Database clients
-- Initialize the client using your API key-
-    
     ```
-    let movieDBClients = require('md-movie-utils').clients;
-    let omdbClient = movieDBClients.OMDBClient.getInstance(<YOUR_API_KEY>);
-    let tmdbClient = movieDBClients.MovieDBClient.getInstance(<YOUR_API_KEY>);
-    ```
- 
-- Get info on any movie using the simple get methods-
     
-    ```
-    let movieRequest = {
-        title: 'Thor Ragnarok',
-        year: 2017,
-        format: 'json',
-        plot: 'full',
-        type: 'movie'
-    };
-    omdbClient/* Or tmdbClient */.get(movieRequest)
-        .then((data) => {
-            console.log(data); // Thor Ragnarok movie info is here!
-        });
+- ##### Using Open Movie Database/The Movie Database clients
+    
+    - Initialize the client using your API key-
+        ```
+        let movieDBClients = require('md-movie-utils').clients;
+        let omdbClient = movieDBClients.OMDBClient.getInstance(<YOUR_API_KEY>);
+        let tmdbClient = movieDBClients.MovieDBClient.getInstance(<YOUR_API_KEY>);
+        ```
         
+    - Get info on any movie using the simple get methods-
+        ```
+        // NB. You don't need to pass plot & format when using tmdbClient.
+        // For detailed instructions, please check the examples or the class
+        // documentations.
         
-    // or using the IMDB ID
-    
-    let movieRequest = {
-        imdbID: 'tt2345',
-        format: 'json',
-        plot: 'full',
-        type: 'movie'
-    };
-    omdbClient/* Or tmdbClient */.get(movieRequest)
-        .then((data) => {
-            console.log(data); // Movie info is here!
-        });
-    ```
-    
-- Or even simply using the helper methods-
-    ```
-    omdbClient/* Or tmdbClient */.getByTitleAndYear(title, year)
-        .then((data) => {
-            console.log(data); // Movie info is here!
-        });
+        let movieRequest = {
+            title: 'Thor Ragnarok',
+            year: 2017,
+            format: 'json',
+            plot: 'full',
+            type: 'movie'
+        };
         
+        omdbClient/* Or tmdbClient */.get(movieRequest)
+            .then((data) => {
+                console.log(data); // Thor Ragnarok movie info is here!
+            });
+                
+        // or using the IMDB ID
+            
+        let movieRequest = {
+            imdbID: 'tt2345',
+            format: 'json',
+            plot: 'full',
+            type: 'movie'
+        };
+        omdbClient/* Or tmdbClient */.get(movieRequest)
+            .then((data) => {
+                console.log(data); // Movie info is here!
+            });
+        ```
         
-    // or using the IMDB ID
-    omdbClient/* Or tmdbClient */.getByIMDBId(imdbID)
-        .then((data) => {
-            console.log(data); // Movie info is here!
-        });
-    ```
-    
-- You can also search for a movie/series-
-    
-    ```
-    let searchRequest = {
-        query: 'Saw'
-    };
-    omdbClient/* Or tmdbClient */.search(searchRequest)
-        .then((data) => {
-            console.log(data); // Movie info(s) is here!
-        });
-    ```
+    - Or even simply using the helper methods-
+        ```
+        
+        omdbClient/* Or tmdbClient */.getByTitleAndYear(title, year)
+            .then((data) => {
+                console.log(data); // Movie info is here!
+            });
+            
+        // or using the IMDB ID
+        omdbClient/* Or tmdbClient */.getByIMDBId(imdbID)
+            .then((data) => {
+                console.log(data); // Movie info is here!
+            });
+        ```
+        
+    - You can also search for a movie/series-
+        
+        ```
+        let searchRequest = {
+            query: 'Saw'
+        };
+        omdbClient/* Or tmdbClient */.search(searchRequest)
+            .then((data) => {
+                console.log(data); // Movie info(s) is here!
+            });
+        ```
     
 #### Examples
 
-Examples are located in `example/server.js`
+Check out the detailed usage [here](https://github.com/dibosh/md-movie-utils/tree/master/example).
 
-First, replace api keys with yours in `example/server.js`
+To test out the API created in examples, just clone the [repository](https://github.com/dibosh/md-movie-utils) 
+and then replace api keys with yours in `md-movie-utils/example/server.js`
 
-Then run examples- `yarn examples`
+Then run the server- `npm install && npm run examples`
 
-Example API-
+The Example API should now be available for testing-
 
 `localhost:3000`
 - `/omdb/get?title=Saw&year=2004&type=movie`
@@ -128,7 +137,7 @@ Example API-
       
 #### The MIT License
 
-Copyright 2018 Munim Dibosh
+Copyright 2018 © **Munim Dibosh**
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this 
 software and associated documentation files (the "Software"), to deal in the Software 

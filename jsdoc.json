@@ -1,0 +1,18 @@
+{
+  "opts": {
+    "template": "node_modules/tui-jsdoc-template"
+  },
+  "templates": {
+    "logo": {
+        "url": "https://github.com/dibosh/md-movie-utils/raw/master/md-movie-utils-icon-invert.png",
+        "width": "162px",
+        "height": "76px"
+    },
+    "name": "    ",
+    "useCollapsibles": true,
+    "css": [
+        ".docs.styles.css"
+    ],
+    "footerText": "If you liked the module, don't forget to hit a star on github: https://github.com/dibosh/md-movie-utils"
+  }
+}

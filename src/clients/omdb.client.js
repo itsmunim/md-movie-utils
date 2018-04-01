@@ -2,7 +2,23 @@ let axios = require('axios');
 let utils = require('../utils');
 let BaseClient = require('./base.client');
 
+/**
+ * Open Movie Database API Client.
+ * @extends BaseClient
+ */
 class OMDBAPIClient extends BaseClient {
+  /**
+   * @param {string} apiKey The omdb api key ([Ref]{@link http://www.omdbapi.com/apikey.aspx})
+   * @param baseUrl Base url for omdb api
+     */
+  constructor(apiKey, baseUrl) {
+    super(apiKey, baseUrl);
+  }
+  /**
+   * Get omdb client instance.
+   * @param {string} apiKey The omdb api key
+   * @returns {OMDBAPIClient}
+   */
   static getInstance(apiKey) {
     return new OMDBAPIClient(apiKey, 'http://www.omdbapi.com/');
   }
