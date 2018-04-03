@@ -1,6 +1,6 @@
 {
   "name": "md-movie-utils",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "The ultimate utility to get any information about a movie",
   "scripts": {
     "examples": "node example/server.js",

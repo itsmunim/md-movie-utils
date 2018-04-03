@@ -11,14 +11,29 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var axios = require('axios');
 var BaseClient = require('./base.client');
 
+/**
+ * The Movie Database API Client.
+ * @extends BaseClient
+ */
+
 var MovieDBClient = function (_BaseClient) {
   _inherits(MovieDBClient, _BaseClient);
 
-  function MovieDBClient() {
+  /**
+   * @param {string} apiKey The movie db api key ([Ref]{@link https://developers.themoviedb.org/3/getting-started/introduction})
+   * @param {string} baseUrl Base url for movie db api
+     */
+  function MovieDBClient(apiKey, baseUrl) {
     _classCallCheck(this, MovieDBClient);
 
-    return _possibleConstructorReturn(this, (MovieDBClient.__proto__ || Object.getPrototypeOf(MovieDBClient)).apply(this, arguments));
+    return _possibleConstructorReturn(this, (MovieDBClient.__proto__ || Object.getPrototypeOf(MovieDBClient)).call(this, apiKey, baseUrl));
   }
+  /**
+   * Get a movie db client instance.
+   * @param {string} apiKey The movie db api key
+   * @returns {MovieDBClient}
+   */
+
 
   _createClass(MovieDBClient, [{
     key: 'get',

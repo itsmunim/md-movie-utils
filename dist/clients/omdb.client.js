@@ -12,14 +12,29 @@ var axios = require('axios');
 var utils = require('../utils');
 var BaseClient = require('./base.client');
 
+/**
+ * Open Movie Database API Client.
+ * @extends BaseClient
+ */
+
 var OMDBAPIClient = function (_BaseClient) {
   _inherits(OMDBAPIClient, _BaseClient);
 
-  function OMDBAPIClient() {
+  /**
+   * @param {string} apiKey The omdb api key ([Ref]{@link http://www.omdbapi.com/apikey.aspx})
+   * @param baseUrl Base url for omdb api
+     */
+  function OMDBAPIClient(apiKey, baseUrl) {
     _classCallCheck(this, OMDBAPIClient);
 
-    return _possibleConstructorReturn(this, (OMDBAPIClient.__proto__ || Object.getPrototypeOf(OMDBAPIClient)).apply(this, arguments));
+    return _possibleConstructorReturn(this, (OMDBAPIClient.__proto__ || Object.getPrototypeOf(OMDBAPIClient)).call(this, apiKey, baseUrl));
   }
+  /**
+   * Get omdb client instance.
+   * @param {string} apiKey The omdb api key
+   * @returns {OMDBAPIClient}
+   */
+
 
   _createClass(OMDBAPIClient, [{
     key: 'get',
