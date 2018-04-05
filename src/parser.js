@@ -40,7 +40,7 @@ class Parser {
     let match = movieFileName.match(format);
     if (match) {
       return {
-        movieName: match[1].trim(),
+        title: match[1].trim(),
         year: match[2].trim()
       }
     } else {
