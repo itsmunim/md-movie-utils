@@ -43,9 +43,8 @@ class Parser {
         movieName: match[1].trim(),
         year: match[2].trim()
       }
-    }
-    {
-      throw new Error('Failed to parse movie name and year');
+    } else {
+      throw new Error('Movie info parsing failed');
     }
   }
 }
